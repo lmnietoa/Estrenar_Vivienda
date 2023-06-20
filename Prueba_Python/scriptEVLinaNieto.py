@@ -1,16 +1,21 @@
-from carguearchivo import CargueArchivo
-from limpiarCSV import LimpiarCSV, LimpiarCSVConPrueba
-from nombresinnumeros import NombreSinNumeros
-from formatotel import FormatoTel
-from cambiarfecha import CambiarFecha
-from clasificacionvivienda import ClasificacionVivienda
-from asignarregion import AsignarRegion
-from explotartxt import Exportartxt
+from bmodulos.carguearchivo import CargueArchivo
+from bmodulos.limpiarCSV import LimpiarCSV, LimpiarCSVConPrueba
+from bmodulos.nombresinnumeros import NombreSinNumeros
+from bmodulos.formatotel import FormatoTel
+from bmodulos.cambiarfecha import CambiarFecha
+from bmodulos.clasificacionvivienda import ClasificacionVivienda
+from bmodulos.asignarregion import AsignarRegion
+from bmodulos.explotartxt import Exportartxt
+import os
+
 
 if __name__ == "__main__":
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_prueba_path = os.path.join(current_dir, 'adatos/Prueba.csv')
+    csv_regiones_path = os.path.join(current_dir, 'adatos/Regiones.csv')
     
     # Cargar archivo .csv que se normalizará
-    cargue_archivo = CargueArchivo('Prueba.csv')
+    cargue_archivo = CargueArchivo(csv_prueba_path)
     df_limpio = cargue_archivo.cargararchivo()
     
     # Crear una instancia de la clase LimpiadorCSV para operar la columna 'Nombre'
@@ -49,7 +54,7 @@ if __name__ == "__main__":
     df_limpio = tipovivienda.tipovivienda()
     
     # Crear una instancia de la clase AsignarRegion para operar la columna 'Region'
-    region = AsignarRegion(df_limpio, 'Regiones.csv')
+    region = AsignarRegion(df_limpio, csv_regiones_path)
     # Crear una columna llamada ‘Region’ que muestre la región correspondiente en cada ciudad
     df_limpio = region.combinarregion()
     
